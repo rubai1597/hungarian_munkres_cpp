@@ -3,7 +3,6 @@
 #include <random>
 
 #include "hungarian.h"
-#include "opencv2/opencv.hpp"
 
 namespace chrono = std::chrono;
 typedef chrono::high_resolution_clock::time_point time_point;

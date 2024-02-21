@@ -13,7 +13,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c++11 --sysroot=${SYSROOT}")
 
 include_directories("${SYSROOT_INCLUDE}")
-include_directories("${OPENCV_INCLUDE_PATH}")
 
 # INCLUDE ADDITIONAL HEADERS
 include_directories(${CMAKE_SOURCE_DIR}/include)
@@ -28,12 +27,6 @@ target_link_libraries(
     hungarian_munkres
     dl
     stdc++fs
-
-    ${OPENCV_LIB_PATH}/libopencv_core.so
-    ${OPENCV_LIB_PATH}/libopencv_imgcodecs.so
-    ${OPENCV_LIB_PATH}/libopencv_imgproc.so
-    ${OPENCV_LIB_PATH}/libopencv_video.so
-    ${OPENCV_LIB_PATH}/libopencv_highgui.so
 )
 
 # install target and libraries
