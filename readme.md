@@ -2,6 +2,7 @@ This repository was written with reference to https://brc2.com/the-algorithm-wor
 
 # How to Run
 ### Set OpenCV Library Path (optional)
+Specify the path where OpenCV was installed
 ```bash
 export OPENCV_INCLUDE_PATH=/usr/local/include/opencv4
 export OPENCV_LIB_PATH=/usr/local/lib
