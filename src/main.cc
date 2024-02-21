@@ -1,5 +1,6 @@
 #include <chrono>
 #include <iostream>
+#include <random>
 
 #include "hungarian.h"
 #include "opencv2/opencv.hpp"
@@ -19,11 +20,24 @@ int main(int argc, char *argv[]) {
   int num_rows = kMinRow + rand() % (kMaxRow - kMinRow + 1);
   int num_cols = kMinCol + rand() % (kMaxCol - kMinCol + 1);
 
-  cv::Mat cost_matrix(cv::Size(num_cols, num_rows), CV_32FC1);
-  cv::randu(cost_matrix, 0.0, 1.0);
+  Mat cost_matrix(num_rows, num_cols);
+  for (int i = 0; i < num_rows; i++)
+    for (int j = 0; j < num_cols; j++)
+      cost_matrix.at(i, j) = (float)rand() / (float)RAND_MAX;
 
   printf("Cost matrix is initialized (%d x %d)\n", num_rows, num_cols);
-  std::cout << cost_matrix << std::endl;
+  printf("[");
+  for (int i = 0; i < num_rows; i++) {
+    if (i != 0) printf(" ");
+    for (int j = 0; j < num_cols; j++) {
+      std::cout << cost_matrix.at(i, j);
+      if (j != num_cols - 1) std::cout << ", ";
+    }
+    if (i != num_rows - 1)
+      std::cout << std::endl;
+    else
+      std::cout << "]" << std::endl;
+  }
 
   std::vector<position> assignment = HungarianAlgorithm::Solve(cost_matrix);
   printf("Assignments:\n\t");
