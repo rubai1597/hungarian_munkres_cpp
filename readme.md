@@ -1,5 +1,7 @@
 This repository was written with reference to https://brc2.com/the-algorithm-workshop/
 
+Check [this branch](https://github.com/rubai1597/hungarian_munkres_cpp/tree/no_opencv) which does not require OpenCV - Not Stable
+
 # How to Run
 ### Set OpenCV Library Path (optional)
 Specify the path where OpenCV was installed
