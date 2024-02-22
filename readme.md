@@ -20,3 +20,16 @@ Get algorithm results of random sized cost matrix (See [this](http://github.com/
 ```bash
 ./install/hungarian_munkres/hungarian_munkres
 ```
+
+### Compare results with scipy.optimize.lienar_sum_assignment
+
+Install scipy in your python environment
+```bash
+pip install tqdm
+pip install scipy
+```
+
+Run python script
+```bash
+python check_alogrithm_valid.py --exec_path ./install/hungarian_munkres/hungarian_munkres --num_iter 10000
+```
