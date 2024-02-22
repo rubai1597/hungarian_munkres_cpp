@@ -3,38 +3,38 @@
 std::vector<position> HungarianAlgorithm::Solve(cv::InputArray cost_matrix) {
   int num_rows = cost_matrix.rows();
   int num_cols = cost_matrix.cols();
-  int matrix_size = num_rows > num_cols ? num_rows : num_cols;
+  bool transposed = false;
+  if (num_rows > num_cols) {
+    num_rows = cost_matrix.cols();
+    num_cols = cost_matrix.rows();
+    transposed = true;
+  }
 
   cv::Mat solution_matrix;
   cost_matrix.copyTo(solution_matrix);
   solution_matrix.convertTo(solution_matrix, CV_32FC1);
+  if (transposed) solution_matrix = solution_matrix.t();
 
-  float max_val = 0.0f;
-  for (int i = 0; i < num_rows; i++)
-    for (int j = 0; j < num_cols; j++)
-      if (max_val < solution_matrix.at<float>(i, j))
-        max_val = solution_matrix.at<float>(i, j);
-
-  cv::copyMakeBorder(solution_matrix, solution_matrix, 0,
-                     matrix_size - num_rows, 0, matrix_size - num_cols,
-                     cv::BORDER_CONSTANT, max_val);
-
-  cv::Mat mask_matrix =
-      cv::Mat::zeros(cv::Size(matrix_size, matrix_size), CV_8UC1);
+  cv::Mat mask_matrix = cv::Mat::zeros(cv::Size(num_cols, num_rows), CV_8UC1);
 
   std::vector<int> row_covered;
-  row_covered.resize(matrix_size, 0);
+  row_covered.resize(num_rows, 0);
   std::vector<int> col_covered;
-  col_covered.resize(matrix_size, 0);
+  col_covered.resize(num_cols, 0);
 
-  Step1(solution_matrix, mask_matrix, row_covered, col_covered, matrix_size,
-        matrix_size);
+  Step1(solution_matrix, mask_matrix, row_covered, col_covered, num_rows,
+        num_cols);
 
   std::vector<position> assignment;
   for (int i = 0; i < num_rows; i++)
     for (int j = 0; j < num_cols; j++)
-      if (mask_matrix.at<uchar>(i, j) == 1)
-        assignment.push_back(position(i, j));
+      if (mask_matrix.at<uchar>(i, j) == 1) {
+        if (transposed)
+          assignment.push_back(position(j, i));
+        else
+          assignment.push_back(position(i, j));
+      }
+  std::sort(assignment.begin(), assignment.end());
 
   solution_matrix.release();
   mask_matrix.release();
