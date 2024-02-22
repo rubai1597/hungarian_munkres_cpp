@@ -32,6 +32,19 @@ class Mat_ {
 
   T &at(int row, int col) { return data[cols_ * row + col]; };
 
+  Mat_<T> t() {
+    int dst_rows = cols_;
+    int dst_cols = rows_;
+    Mat_<T> dst = Mat_<T>(dst_rows, dst_cols);
+    dst.data.resize(dst_rows * dst_cols, 0);
+    for (int i = 0; i < rows_; i++)
+      for (int j = 0; j < cols_; j++) {
+        int index = dst_cols * j + i;
+        dst.data[index] = data[cols_ * i + j];
+      }
+    return dst;
+  }
+
   void CopyMakeBorder(Mat_ &dst, int top, int bottom, int left, int right,
                       T value) {
     int dst_rows = dst.rows_ + top + bottom;
